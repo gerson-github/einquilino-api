@@ -17,6 +17,12 @@ client
   .then(() => console.log("✅ Conectado ao PostgreSQL com sucesso!"))
   .catch((err) => console.error("❌ Erro ao conectar no PostgreSQL:", err));
 
+//IMPORTAR ROTAS
+const indicatorsRoutes = require("./src/routes/indicators");
+
+//REGISTRAR ROTAS
+app.use("/indicators", indicatorsRoutes(client)); 
+
 // ROTA TESTE
 app.get("/", (req, res) => {
   res.send("API Rodando! 🎉");
