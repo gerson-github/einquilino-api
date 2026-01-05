@@ -58,8 +58,6 @@ client
 const indicatorsRoutes = require("./src/routes/indicators");
 const templateRoutes = require("./src/routes/templates");
 
-console.log("📦 templates routes file loaded");
-
 //REGISTRAR ROTAS
 app.use("/api/indicators", indicatorsRoutes(client));
 app.use("/api/templates", templateRoutes(client));
