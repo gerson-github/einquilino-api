@@ -5,6 +5,12 @@ const cors = require("cors");
 const pg = require("pg"); // <-- THIS WAS MISSING
 
 const app = express();
+app.use((req, res, next) => {
+  res.set("Cache-Control", "no-store");
+  next();
+});
+
+
 app.use(express.json());
 
 // app.use(
@@ -52,13 +58,14 @@ client
 const indicatorsRoutes = require("./src/routes/indicators");
 const templateRoutes = require("./src/routes/templates");
 
+console.log("📦 templates routes file loaded");
 
 //REGISTRAR ROTAS
-app.use("/indicators", indicatorsRoutes(client));
-app.use("/templates", templateRoutes(client));
+app.use("/api/indicators", indicatorsRoutes(client));
+app.use("/api/templates", templateRoutes(client));
 
 // ROTA TESTE
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.send("API Rodando! 🎉");
 });
 
