@@ -1,4 +1,10 @@
-// src/templates/template.controller.js
+// Um controller é a camada que fica entre as rotas HTTP e a lógica de negócio.
+// Ele não deve saber nada sobre SQL ou DB diretamente — só trata:
+// Receber a requisição (req)
+// Chamar a camada de serviço (service)
+// Tratar erros
+// Retornar resposta (res) para o cliente
+
 const service = require("./template.service");
 
 exports.getAllTemplates = async (req, res) => {
