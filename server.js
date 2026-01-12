@@ -1,24 +1,15 @@
 require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
-
-const pg = require("pg"); // <-- THIS WAS MISSING
-
 const app = express();
+
 app.use((req, res, next) => {
   res.set("Cache-Control", "no-store");
   next();
 });
 
 app.use(express.json());
-
-// app.use(
-//   cors({
-//     origin: "http://localhost:5001",
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     credentials: true,
-//   })
-// );
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -39,25 +30,31 @@ app.use(
   })
 );
 
-// CONFIGURE SEU CLIENT POSTGRES
-const client = new pg.Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-});
+// // CONFIGURE SEU CLIENT POSTGRES
+// const client = new pg.Client({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: { rejectUnauthorized: false },
+// });
 
-// TESTAR CONEXÃO
-client
-  .connect()
-  .then(() => console.log("✅ Conectado ao PostgreSQL com sucesso!"))
-  .catch((err) => console.error("❌ Erro ao conectar no PostgreSQL:", err));
+// // TESTAR CONEXÃO
+// client
+//   .connect()
+//   .then(() => console.log("✅ Conectado ao PostgreSQL com sucesso!"))
+//   .catch((err) => console.error("❌ Erro ao conectar no PostgreSQL:", err));
 
 //IMPORTAR ROTAS
-const indicatorsRoutes = require("./src/routes/indicators");
-const templateRoutes = require("./src/routes/templates");
+//const indicatorsRoutes = require("./src/routes/indicators");
+//const templateRoutes = require("./src/routes/templates");
 
 //REGISTRAR ROTAS
-app.use("/api/indicators", indicatorsRoutes(client));
-app.use("/api/templates", templateRoutes(client));
+//app.use("/api/indicators", indicatorsRoutes(indicatorsRoutes));
+//app.use("/api/templates", templateRoutes(templateRoutes));
+
+const indicatorsRoutes = require("./src/indicators/indicator.routes");
+app.use("/api/indicators", indicatorsRoutes);
+
+const templateRoutes = require("./src/templates/template.routes");
+app.use("/api/templates", templateRoutes);
 
 //teste
 app.get("/api/names", (req, res) => {
@@ -75,3 +72,15 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor iniciado na porta ${PORT}`);
 });
+
+// HTTP Request
+//    ↓
+// Routes
+//    ↓
+// Controller (HTTP)
+//    ↓
+// Service (Business logic)
+//    ↓
+// Repository (SQL)
+//    ↓
+// PostgreSQL
