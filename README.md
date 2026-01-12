@@ -12,7 +12,7 @@ The app exposes a basic test route to confirm that the API and database connecti
 Node.js
 Express
 PostgreSQL
-pg (PostgreSQL client)
+pg (PostgreSQL client - pgADMIN 4 as IDE)
 dotenv
 
 >> Project structure
