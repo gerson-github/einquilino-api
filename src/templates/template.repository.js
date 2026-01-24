@@ -13,8 +13,9 @@ exports.findAll = async () => {
 
 exports.findById = async (id) => {
   const sql = `
-    SELECT rentals_db.get_template_by_id($1) AS template
+    SELECT rentals_db.get_contract_template($1) AS template
   `;
+  //SELECT rentals_db.get_template_by_id($1) AS template
   const { rows } = await db.query(sql, [id]);
   return rows[0]?.template || null;
 };
