@@ -56,6 +56,10 @@ app.use("/api/indicators", indicatorsRoutes);
 const templateRoutes = require("./src/templates/template.routes");
 app.use("/api/templates", templateRoutes);
 
+const contractDataRoutes = require("./src/contractData/contractData.routes");
+app.use("/api/contract-data", contractDataRoutes);
+
+
 //teste
 app.get("/api/names", (req, res) => {
   res.json({
