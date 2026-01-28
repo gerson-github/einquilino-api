@@ -59,6 +59,8 @@ app.use("/api/templates", templateRoutes);
 const contractDataRoutes = require("./src/contractData/contractData.routes");
 app.use("/api/contract-data", contractDataRoutes);
 
+const contracsRoutes = require("./src/contracts/contract.routes");
+app.use("/api/contracts", contracsRoutes);
 
 //teste
 app.get("/api/names", (req, res) => {
