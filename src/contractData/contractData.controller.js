@@ -3,13 +3,18 @@ const service = require("./contractData.service");
 
 exports.saveContractData = async (req, res) => {
   try {
-    console.log("BODY:", req.body);
-    //await service.saveContractData(req.body);
-    return res.status(200).json({ message: "Contract data saved successfully" });
+    //console.log("BODY:", req.body);
+    console.log("📥 Incoming contract payload:");
+    console.dir(req.body, { depth: null });
+
+    await service.saveContractData(req.body);
+    return res
+      .status(200)
+      .json({ message: "Contract data saved successfully" });
   } catch (err) {
     console.error(err);
     return res.status(500).json({
-      error: err.message || "Failed to save contract data"
+      error: err.message || "Failed to save contract data",
     });
   }
 };
