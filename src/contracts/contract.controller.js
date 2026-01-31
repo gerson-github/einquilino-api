@@ -32,3 +32,43 @@ exports.getContractById = async (req, res) => {
     res.status(500).json({ error: "Failed to fetch Contract" });
   }
 };
+
+/*--- CRUD operations to be implemented below ---*/
+exports.createContract = async (req, res) => {
+  try {
+    const contractData = req.body;
+    const newContract = await service.createContract(contractData);
+    res.status(201).json(newContract);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to create Contract" });
+  }
+};
+exports.updateContract = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const contractData = req.body;
+    const updatedContract = await service.updateContract(id, contractData);
+    if (!updatedContract) {
+      return res.status(404).json({ error: "Contract not found" });
+    }
+    res.json(updatedContract);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to update Contract" });
+  }
+};
+exports.deleteContract = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await service.deleteContract(id);
+    if (!deleted) {
+      return res.status(404).json({ error: "Contract not found" });
+    }
+    res.status(204).send();
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to delete Contract" });
+  }
+};
+/*--- End of CRUD operations ---*/
