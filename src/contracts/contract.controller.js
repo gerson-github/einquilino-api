@@ -33,7 +33,7 @@ exports.getContractById = async (req, res) => {
   }
 };
 
-/*--- CRUD operations to be implemented below ---*/
+/*--- CRUD operations ---*/
 exports.createContract = async (req, res) => {
   try {
     const contractData = req.body;
@@ -48,10 +48,13 @@ exports.updateContract = async (req, res) => {
   try {
     const { id } = req.params;
     const contractData = req.body;
+    console.log(contractData);
     const updatedContract = await service.updateContract(id, contractData);
+
     if (!updatedContract) {
       return res.status(404).json({ error: "Contract not found" });
     }
+
     res.json(updatedContract);
   } catch (err) {
     console.error(err);

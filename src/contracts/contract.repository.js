@@ -31,17 +31,29 @@ exports.create = async (contractData) => {
 };
 
 exports.update = async (id, contractData) => {
-  const sql = `
-    UPDATE rentals_db.contracts
-    SET name = $1,
-        details = $2,
-        updatedAt = NOW()
-    WHERE id = $3
-    RETURNING *
-  `;
-  const values = [contractData.name, contractData.details, id];
-  const { rows } = await db.query(sql, values);
-  return rows[0] || null;
+  try {
+    console.log("Updating contract with data:", contractData);
+    console.log("Using ID:", id);
+
+    // Call the stored procedure
+    if (contractData.data) {
+      const sql = `CALL rentals_db.upsert_contract_from_json($1::uuid, $2::jsonb)`;
+      const values = [id, JSON.stringify(contractData.data)];
+      await db.query(sql, values);
+    }
+
+    //return the updated contract
+    const updatedContract = await this.findById(id);
+    if (!updatedContract) {
+      return null;
+    }
+
+    //return { success: true, id: updatedContract.id, version: contractData.version || null, submittedAt: contractData.submittedAt || null, data: updatedContract.data };
+    return { success: true };
+  } catch (err) {
+    console.error("Error updating contract:", err);
+    throw err;
+  }
 };
 
 exports.delete = async (id) => {
@@ -53,3 +65,5 @@ exports.delete = async (id) => {
   const { rows } = await db.query(sql, [id]);
   return rows[0] || null;
 };
+
+

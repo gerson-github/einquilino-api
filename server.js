@@ -56,11 +56,15 @@ app.use("/api/indicators", indicatorsRoutes);
 const templateRoutes = require("./src/templates/template.routes");
 app.use("/api/templates", templateRoutes);
 
-const contractDataRoutes = require("./src/contractData/contractData.routes");
-app.use("/api/contract-data", contractDataRoutes);
+//const contractDataRoutes = require("./src/contractData/contractData.routes");
+//app.use("/api/contract-data", contractDataRoutes);
 
 const contracsRoutes = require("./src/contracts/contract.routes");
 app.use("/api/contracts", contracsRoutes);
+
+const contractFilesRoutes = require("./src/files/file.routes");
+app.use("/api/contract-files", contractFilesRoutes);
+
 
 //teste
 app.get("/api/names", (req, res) => {
