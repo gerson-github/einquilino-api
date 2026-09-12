@@ -32,6 +32,9 @@ PORT=3000
 
 Install dependencies: npm install
 Start the server: node index.js (or nodemon index.js)
+Open the console and run: `npm run dev`
+This command reads the `package.json` file and runs the `dev` script, which starts `server.js`.
+
 
 >> Available Routes
 
